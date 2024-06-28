@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "live180"
+version = "0.1.0"
+description = ""
+authors = ["dunossauro <mendesxeduardo@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Kivy = "^2.0.0"
+kivymd = "^1.1.1"
+pandas = "^2.2.2"
+
+
+[tool.poetry.dev-dependencies]
+buildozer = "^1.2.0"
+Cython = "^0.29.24"
+watchdog = "^2.1.6"
+black = "^21.9b0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
