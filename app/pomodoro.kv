@@ -1,0 +1,393 @@
+<CustomSpinnerOption@SpinnerOption>:
+    background_normal: ''  # Remove a imagem de fundo padrão
+    background_down: ''  # Remove a imagem de fundo pressionado
+    background_color: 0.96, 0.96, 0.96, 1  # Cor de fundo off-white
+    color: 0.2, 0.6, 0.86, 1  # Cor do texto azul
+
+ScreenManager:
+    PomodoroScreen:
+    UserListScreen:
+    UserDetailsScreen:
+
+<PomodoroScreen>:
+    name: 'pomodoro'
+
+<UserListScreen>:
+    name: 'user_list'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(10)
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1  # Fundo branco para o formulário inteiro
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        ScrollView:
+            GridLayout:
+                id: user_list_grid
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(10)
+                padding: dp(10)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
+            padding: dp(10)
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1  # Fundo branco para os botões
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Button:
+                text: 'Confirmar'
+                on_press: root.on_confirm()
+                size_hint_x: 1
+                height: '50dp'
+                background_color: 0.2, 0.6, 0.86, 1  # Cor de fundo azul
+                color: 1, 1, 1, 1  # Cor do texto branca
+
+            Button:
+                text: 'Voltar'
+                on_press: app.root.current = 'pomodoro'
+                size_hint_x: 1
+                height: '50dp'
+                background_color: 0.2, 0.6, 0.86, 1  # Cor de fundo azul
+                color: 1, 1, 1, 1  # Cor do texto branca
+
+<UserDetailsScreen>:
+    name: 'user_details'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(10)
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1  # Fundo branco para o formulário inteiro
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        ScrollView:
+            GridLayout:
+                id: user_details_grid
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(10)
+                padding: dp(10)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
+            padding: dp(10)
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1  # Fundo branco para os botões
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Button:
+                text: 'Usuário Anterior'
+                on_press: root.prev_page()
+                size_hint_x: 1
+                height: '50dp'
+                background_color: 0.2, 0.6, 0.86, 1  # Cor de fundo azul
+                color: 1, 1, 1, 1  # Cor do texto branca
+
+            Button:
+                text: 'Próximo Usuário'
+                on_press: root.next_page()
+                size_hint_x: 1
+                height: '50dp'
+                background_color: 0.2, 0.6, 0.86, 1  # Cor de fundo azul
+                color: 1, 1, 1, 1  # Cor do texto branca
+
+            Button:
+                text: 'Voltar'
+                on_press: root.on_back()
+                size_hint_x: 1
+                height: '50dp'
+                background_color: 0.2, 0.6, 0.86, 1  # Cor de fundo azul
+                color: 1, 1, 1, 1  # Cor do texto branca
+
+<PomodoroForm>:
+    orientation: 'vertical'
+    padding: dp(20)
+    spacing: dp(10)
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1  # Fundo branco para o formulário inteiro
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: dp(10)
+        size_hint_y: None
+        height: dp(50)
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1  # Fundo branco para a caixa de filtro
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: 'Selecione o bairro:'
+            size_hint_x: None
+            width: dp(150)
+            color: 0.2, 0.6, 0.86, 1  # Cor do texto azul
+
+        BoxLayout:
+            size_hint_x: None
+            width: dp(10)  # Espaçamento entre a label e o campo de filtro
+
+        Spinner:
+            id: bairro_spinner
+            text: 'Selecione o BAIRRO'
+            values: root.bairro_list
+            size_hint_x: None
+            width: dp(400)
+            height: dp(50)
+            background_color: 0.96, 0.96, 0.96, 1  # Cor de fundo off-white
+            color: 0.2, 0.6, 0.86, 1  # Cor do texto azul
+            background_normal: ''  # Remove a imagem de fundo padrão
+            background_down: ''  # Remove a imagem de fundo pressionado
+            on_text: root.update_rua_spinner()
+            option_cls: 'CustomSpinnerOption'
+
+    BoxLayout:
+        id: rua_box
+        orientation: 'horizontal'
+        spacing: dp(10)
+        size_hint_y: None
+        height: dp(50)
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1  # Fundo branco para a caixa de filtro
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        opacity: 1 if root.ids.bairro_spinner.text != 'Selecione o BAIRRO' else 0
+        disabled: root.ids.bairro_spinner.text == 'Selecione o BAIRRO'
+
+        Label:
+            text: 'Selecione a rua:'
+            size_hint_x: None
+            width: dp(150)
+            color: 0.2, 0.6, 0.86, 1  # Cor do texto azul
+
+        BoxLayout:
+            size_hint_x: None
+            width: dp(10)  # Espaçamento entre a label e o campo de filtro
+
+        Spinner:
+            id: rua_spinner
+            text: 'Selecione a RUA'
+            values: root.rua_list
+            size_hint_x: None
+            width: dp(400)
+            height: dp(50)
+            background_color: 0.96, 0.96, 0.96, 1  # Cor de fundo off-white
+            color: 0.2, 0.6, 0.86, 1  # Cor do texto azul
+            background_normal: ''  # Remove a imagem de fundo padrão
+            background_down: ''  # Remove a imagem de fundo pressionado
+            on_text: root.update_numero_spinner()
+            option_cls: 'CustomSpinnerOption'
+
+    BoxLayout:
+        id: numero_box
+        orientation: 'horizontal'
+        spacing: dp(10)
+        size_hint_y: None
+        height: dp(50)
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1  # Fundo branco para a caixa de filtro
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        opacity: 1 if root.ids.rua_spinner.text != 'Selecione a RUA' else 0
+        disabled: root.ids.rua_spinner.text == 'Selecione a RUA'
+
+        Label:
+            text: 'Selecione o Número:'
+            size_hint_x: None
+            width: dp(150)
+            color: 0.2, 0.6, 0.86, 1  # Cor do texto azul
+
+        BoxLayout:
+            size_hint_x: None
+            width: dp(10)  # Espaçamento entre a label e o campo de filtro
+
+        Spinner:
+            id: numero_spinner
+            text: 'Selecione o NUMERO'
+            values: root.numero_list
+            size_hint_x: None
+            width: dp(400)
+            height: dp(50)
+            background_color: 0.96, 0.96, 0.96, 1  # Cor de fundo off-white
+            color: 0.2, 0.6, 0.86, 1  # Cor do texto azul
+            background_normal: ''  # Remove a imagem de fundo padrão
+            background_down: ''  # Remove a imagem de fundo pressionado
+            on_text: root.update_complemento_spinner()
+            option_cls: 'CustomSpinnerOption'
+
+    BoxLayout:
+        id: complemento_box
+        orientation: 'horizontal'
+        spacing: dp(10)
+        size_hint_y: None
+        height: dp(50)
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1  # Fundo branco para a caixa de filtro
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        opacity: 1 if root.ids.numero_spinner.text != 'Selecione o NUMERO' else 0
+        disabled: root.ids.numero_spinner.text == 'Selecione o NUMERO'
+
+        Label:
+            text: 'Selecione o complemento:'
+            size_hint_x: None
+            width: dp(150)
+            color: 0.2, 0.6, 0.86, 1  # Cor do texto azul
+
+        BoxLayout:
+            size_hint_x: None
+            width: dp(10)  # Espaçamento entre a label e o campo de filtro
+
+        Spinner:
+            id: complemento_spinner
+            text: 'Selecione o COMPLEMENTO'
+            values: root.complemento_list
+            size_hint_x: None
+            width: dp(400)
+            height: dp(50)
+            background_color: 0.96, 0.96, 0.96, 1  # Cor de fundo off-white
+            color: 0.2, 0.6, 0.86, 1  # Cor do texto azul
+            background_normal: ''  # Remove a imagem de fundo padrão
+            background_down: ''  # Remove a imagem de fundo pressionado
+            on_text: root.update_user_display()
+            option_cls: 'CustomSpinnerOption'
+
+    ScrollView:
+        GridLayout:
+            id: data_grid
+            cols: 3  # Ajustado para 3 colunas para incluir espaçamento
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: dp(10)
+            padding: dp(10)
+            row_default_height: dp(30)  # Define uma altura padrão para as linhas
+
+            Label:
+                text: 'Área:'
+                size_hint_y: None
+                height: dp(30)
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'  # Alinha verticalmente ao meio
+                color: 0.2, 0.6, 0.86, 1  # Cor do texto azul
+
+            Label:
+                id: area_label
+                size_hint_y: None
+                height: dp(30)
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'  # Alinha verticalmente ao meio
+                color: 0, 0, 0, 1  # Cor do texto preta
+
+            Widget:  # Espaçamento à direita
+                size_hint_x: None
+                width: dp(10)
+
+            Label:
+                text: 'Microárea:'
+                size_hint_y: None
+                height: dp(30)
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'  # Alinha verticalmente ao meio
+                color: 0.2, 0.6, 0.86, 1  # Cor do texto azul
+
+            Label:
+                id: codigo_label
+                size_hint_y: None
+                height: dp(30)
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'  # Alinha verticalmente ao meio
+                color: 0, 0, 0, 1  # Cor do texto preta
+
+            Widget:  # Espaçamento à direita
+                size_hint_x: None
+                width: dp(180)
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: dp(50)
+        spacing: dp(10)
+        padding: dp(10)
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1  # Fundo branco para os botões
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Button:
+            text: 'Visualizar Residência'
+            size_hint_y: None
+            height: '50dp'
+            background_color: (0.2, 0.6, 0.86, 1)  # Cor de fundo azul para os botões
+            color: (1, 1, 1, 1)  # Cor do texto branca
+            font_size: '20sp'
+            on_press: root.visualizar_residencia()
+
+        Button:
+            text: 'Menu Inicial'
+            size_hint_y: None
+            height: '50dp'
+            background_color: (0.2, 0.6, 0.86, 1)  # Cor de fundo azul para os botões
+            color: (1, 1, 1, 1)  # Cor do texto branca
+            font_size: '20sp'
+            on_press: root.go_to_home()
+
+
+
+<UserAddScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '10dp'
+        spacing: '10dp'
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.96, 0.96, 1  # Fundo off-white
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Button:
+            text: 'Adicionar'
+            size_hint_y: None
+            height: '50dp'
+            background_color: (0.2, 0.6, 0.86, 1)
+            color: (1, 1, 1, 1)
+            font_size: '20sp'
+            on_press: root.add_user()

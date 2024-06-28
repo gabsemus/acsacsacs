@@ -1,0 +1,106 @@
+# pending_screen.kv
+<PendingScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(10)
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.96, 0.96, 1  # Off-white background color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: 'Pendências'
+            size_hint_y: None
+            height: dp(40)
+            font_size: '24sp'
+            color: (0, 0, 0, 1)  # Black text color
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: dp(10)
+            size_hint_y: None
+            height: dp(50)
+
+            Label:
+                text: 'Selecione a AREA:'
+                size_hint_x: None
+                width: dp(150)
+                color: (0, 0, 0, 1)  # Black text color
+
+            Spinner:
+                id: area_spinner
+                text: 'Selecione a AREA'
+                values: root.area_list
+                size_hint_x: None
+                width: dp(350)
+                height: dp(50)
+                background_color: (0.96, 0.96, 0.96, 1)  # Off-white background color
+                color: (0, 0, 0, 1)  # Black text color
+                background_normal: ''  # Remove the default background image
+                background_down: ''  # Remove the default pressed background image
+                on_text: root.update_codigo_spinner()
+                option_cls: 'CustomSpinnerOption'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: dp(10)
+            size_hint_y: None
+            height: dp(50)
+
+            Label:
+                text: 'Selecione o CODIGO:'
+                size_hint_x: None
+                width: dp(150)
+                color: (0, 0, 0, 1)  # Black text color
+
+            Spinner:
+                id: codigo_spinner
+                text: 'Selecione o CODIGO'
+                values: root.codigo_list
+                size_hint_x: None
+                width: dp(350)
+                height: dp(50)
+                background_color: (0.96, 0.96, 0.96, 1)  # Off-white background color
+                color: (0, 0, 0, 1)  # Black text color
+                background_normal: ''  # Remove the default background image
+                background_down: ''  # Remove the default pressed background image
+                option_cls: 'CustomSpinnerOption'
+
+        Button:
+            text: 'Buscar'
+            size_hint_y: None
+            height: dp(50)
+            background_color: (0.2, 0.6, 0.86, 1)  # Blue background color
+            color: (1, 1, 1, 1)  # White text color
+            font_size: '20sp'
+            on_press: root.search_pendencias()
+
+        Label:
+            text: 'Pendências Encontradas'
+            size_hint_y: None
+            height: dp(40)
+            font_size: '18sp'
+            color: (0, 0, 0, 1)  # Black text color
+
+        ScrollView:
+            GridLayout:
+                id: grid_pendencias
+                cols: 4
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: dp(30)
+                row_force_default: True
+                spacing: dp(5)
+                padding: dp(5)
+
+        Button:
+            text: 'Voltar'
+            size_hint_y: None
+            height: dp(50)
+            background_color: (0.2, 0.6, 0.86, 1)  # Blue background color
+            color: (1, 1, 1, 1)  # White text color
+            font_size: '20sp'
+            on_press: root.manager.current = 'home'

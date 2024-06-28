@@ -1,0 +1,53 @@
+<HomeScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '10dp'
+        spacing: '10dp'
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.96, 0.96, 1  # Fundo off-white
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: 'Bem-vindo ao Aplicativo PRONTO ACS'
+            font_size: '24sp'
+            size_hint_y: None
+            height: '50dp'
+            color: (0.2, 0.6, 0.86, 1)
+
+        BoxLayout:
+            size_hint_y: None
+            height: '20dp'  # Espaçamento acima da imagem
+
+        Image:
+            source: 'app/image/logo.png'  # Substitua pelo caminho da sua imagem
+            size_hint: None, None
+            width: '350dp'
+            height: '200dp'
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {"center_x": 0.5}  # Centralizar a imagem horizontalmente
+
+        BoxLayout:
+            size_hint_y: None
+            height: '150dp'  # Espaçamento abaixo da imagem
+
+        Button:
+            text: 'Ir para Visita Domiciliar'
+            size_hint_y: None
+            height: '50dp'
+            background_color: (0.2, 0.6, 0.86, 1)
+            color: (1, 1, 1, 1)
+            font_size: '20sp'
+            on_press: root.manager.current = 'pomodoro'
+
+        Button:
+            text: 'Pendências'
+            size_hint_y: None
+            height: '50dp'
+            background_color: (0.2, 0.6, 0.86, 1)
+            color: (1, 1, 1, 1)
+            font_size: '20sp'
+            on_press: root.manager.current = 'pending_screen'
